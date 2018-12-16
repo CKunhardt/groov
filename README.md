@@ -16,14 +16,14 @@ only so much that one person can change and modify during a live performance. Cu
 demo scene of two orbitals of cubes surrounding one central cube.
 
 ## Overall Architecture
-**Main.cpp** handles window creation.  
 **GroovPlayer.cpp** contains the user interface aspects of the application. Loading the audio file takes 
 place here as well the creation of all of the sliders and buttons that allow the graphics to be tweaked.
 GroovPlayer talks to GroovAudioApp and GroovRenderer.  
 **GroovRenderer.cpp** is an OpenGLRenderer and handles all of the graphical elements. All of the OpenGL 
 work is accomplished here.  
-**GroovAudioApp.cpp** is an AudioAppComponent that handles starting and stopping the audio file.   
-**Mesh.h** is an implementation of the Mesh class from Bret Jackson's BasicGraphics repository.  
+**GroovAudioProcessor.cpp** is an AudioProcessor that handles starting and stopping the audio file.
+**GroovRenderWindow.cpp** is a class that allows the graphics window to pop up on a second screen.     
+**Mesh.h**    
 **Shaders.h** contains the shaders we implemented.  
 **GLMHelpers.h** provides some helper functions for conversions.  
 **Utilities.h** contains a bunch of miscellaneous utilities that are used by the various JUCE demos.  
@@ -31,6 +31,8 @@ work is accomplished here.
 
 ## How to build and run
 
+
+The previous standalone application is located in [this repo](https://github.com/CKunhardt/music-materialized)
 
 ## Credits
 
