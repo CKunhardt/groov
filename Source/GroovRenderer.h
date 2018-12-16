@@ -36,8 +36,6 @@ public:
 
 	Matrix3D<float> getProjectionMatrix() const;
 
-	void setTexture(Mesh::Texture* t);
-
 	void paint(Graphics&) override;
 
 	void resized() override;
@@ -101,12 +99,8 @@ private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> _curTime;
 
 	OpenGLTexture texture;
-	Mesh::Texture* textureToUse = nullptr;
-	Mesh::Texture* lastTexture = nullptr;
 
 	String newVertexShader, newFragmentShader, newVertexSkyShader, newFragmentSkyShader, statusText;
-
-	OwnedArray<Mesh::Texture> textures;
 
 	void loadShaders();
 
@@ -121,7 +115,6 @@ private:
 	const int GV_NUM_ORBITALS = 4;
 	const float GV_ORBITAL_DISTANCE = 1.35;
 	const float GV_INV_WIGGLE_DISTANCE = 10.0f;
-
 
 	// Author: Stefan Gustavson (stegu@itn.liu.se) 2004
 

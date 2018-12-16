@@ -30,9 +30,6 @@ GroovRenderer::GroovRenderer()
 	initSimplexTexture(&simplexTextureID);
 	initGradTexture(&gradTextureID);
 
-	//textures.add(new Mesh::TextureFromAsset("background.png"));
-	//setTexture(textures[0]);
-
 	initOrbitals();
 
 	openGLContext.setRenderer(this);
@@ -75,9 +72,6 @@ void GroovRenderer::openGLContextClosing()
 	// When the context is about to close, you must use this callback to delete
 	// any GPU resources while the context is still current.
 	freeAllContextObjects();
-
-	if (lastTexture != nullptr)
-		setTexture(lastTexture);
 }
 
 void GroovRenderer::freeAllContextObjects()
@@ -90,7 +84,6 @@ void GroovRenderer::freeAllContextObjects()
 	shader.reset();
 	attributes.reset();
 	uniforms.reset();
-	texture.release();
 }
 
 void GroovRenderer::renderOpenGL()
@@ -101,10 +94,6 @@ void GroovRenderer::renderOpenGL()
 
 	OpenGLHelpers::clear(getUIColourIfAvailable(LookAndFeel_V4::ColourScheme::UIColour::windowBackground,
 		Colours::lightblue));
-
-	if (textureToUse != nullptr)
-		if (!textureToUse->applyTo(texture))
-			textureToUse = nullptr;
 
 	// Check whether we need to compile a new shader
 	updateShader();
@@ -142,8 +131,6 @@ void GroovRenderer::renderOpenGL()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	openGLContext.extensions.glActiveTexture(GL_TEXTURE0);
-
-	// texture.bind();
 
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -248,9 +235,6 @@ void GroovRenderer::renderOpenGL()
 
 	if (uniforms->normalMatrix.get() != nullptr)
 		uniforms->normalMatrix->setMatrix3(normalMatrix, 1, false);
-
-	//if (uniforms->texture.get() != nullptr)
-	//	uniforms->texture->set((GLint)0);
 
 	if (uniforms->eyePosition.get() != nullptr)
 		uniforms->eyePosition->set(eye_world.x, eye_world.y, eye_world.z);
@@ -392,11 +376,6 @@ Matrix3D<float> GroovRenderer::getProjectionMatrix() const
 	auto h = w * getLocalBounds().toFloat().getAspectRatio(false);
 
 	return Matrix3D<float>::fromFrustum(-w, w, -h, h, 3.0f, 30.0f);
-}
-
-void GroovRenderer::setTexture(Mesh::Texture* t)
-{
-	lastTexture = textureToUse = t;
 }
 
 void GroovRenderer::paint(Graphics&) {}

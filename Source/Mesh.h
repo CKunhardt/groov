@@ -26,6 +26,7 @@ public:
 		float texCoord[2];
 	};
 
+	// Attributes of a vertex. This struct is unmodified from JUCE's OpenGLDemo.h
 	struct Attributes
 	{
 		Attributes(OpenGLContext& openGLContext, OpenGLShaderProgram& shader)
@@ -87,6 +88,7 @@ public:
 
 	//==============================================================================
 	// This struct manages all of our uniforms that are passed through to the shader
+	// We added a lot of uniforms, but the structure of how it's all set up comes from JUCE
 
 	struct Uniforms
 	{
@@ -96,7 +98,6 @@ public:
 			projectionMatrix.reset(createUniform(openGLContext, shader, "projectionMatrix"));
 			viewMatrix.reset(createUniform(openGLContext, shader, "viewMatrix"));
 			normalMatrix.reset(createUniform(openGLContext, shader, "normalMatrix"));
-			texture.reset(createUniform(openGLContext, shader, "textureSampler"));
 			permTexture.reset(createUniform(openGLContext, shader, "permTexture"));
 			simplexTexture.reset(createUniform(openGLContext, shader, "simplexTexture"));
 			gradTexture.reset(createUniform(openGLContext, shader, "gradTexture"));
@@ -112,7 +113,6 @@ public:
 			projectionMatrix,
 			viewMatrix,
 			normalMatrix,
-			texture,
 			permTexture,
 			simplexTexture,
 			gradTexture,
@@ -225,109 +225,5 @@ public:
 							{ tc.x, tc.y } });
 			}
 		}
-	};
-
-	//==============================================================================
-		// These classes are used to load textures from the various sources that the program uses..
-	struct Texture
-	{
-		virtual ~Texture() {}
-		virtual bool applyTo(OpenGLTexture&) = 0;
-
-		String name;
-	};
-
-	struct DynamicTexture : public Texture
-	{
-		DynamicTexture() { name = "Dynamically-generated texture"; }
-
-		Image image;
-		BouncingNumber x, y;
-
-		bool applyTo(OpenGLTexture& texture) override
-		{
-			int size = 128;
-
-			if (!image.isValid())
-				image = Image(Image::ARGB, size, size, true);
-
-			{
-				Graphics g(image);
-				g.fillAll(Colours::lightcyan);
-
-				g.setColour(Colours::darkred);
-				g.drawRect(0, 0, size, size, 2);
-
-				g.setColour(Colours::green);
-				g.fillEllipse(x.getValue() * size * 0.9f, y.getValue() * size * 0.9f, size * 0.1f, size * 0.1f);
-
-				g.setColour(Colours::black);
-				g.setFont(40);
-				g.drawFittedText(String(Time::getCurrentTime().getMilliseconds()), image.getBounds(), Justification::centred, 1);
-			}
-
-			texture.loadImage(image);
-			return true;
-		}
-	};
-
-	struct BuiltInTexture : public Texture
-	{
-		BuiltInTexture(const char* nm, const void* imageData, size_t imageSize)
-			: image(resizeImageToPowerOfTwo(ImageFileFormat::loadFrom(imageData, imageSize)))
-		{
-			name = nm;
-		}
-
-		Image image;
-
-		bool applyTo(OpenGLTexture& texture) override
-		{
-			texture.loadImage(image);
-			return false;
-		}
-	};
-
-	struct TextureFromFile : public Texture
-	{
-		TextureFromFile(const File& file)
-		{
-			name = file.getFileName();
-			image = resizeImageToPowerOfTwo(ImageFileFormat::loadFrom(file));
-		}
-
-		Image image;
-
-		bool applyTo(OpenGLTexture& texture) override
-		{
-			texture.loadImage(image);
-			return false;
-		}
-	};
-
-	struct TextureFromAsset : public Texture
-	{
-		TextureFromAsset(const char* assetName)
-		{
-			name = assetName;
-			image = resizeImageToPowerOfTwo(getImageFromAssets(assetName));
-		}
-
-		Image image;
-
-		bool applyTo(OpenGLTexture& texture) override
-		{
-			texture.loadImage(image);
-			return false;
-		}
-	};
-
-	static Image resizeImageToPowerOfTwo(Image image)
-	{
-		if (!(isPowerOfTwo(image.getWidth()) && isPowerOfTwo(image.getHeight())))
-			return image.rescaled(jmin(1024, nextPowerOfTwo(image.getWidth())),
-				jmin(1024, nextPowerOfTwo(image.getHeight())));
-
-		return image;
 	};
 };
