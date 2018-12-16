@@ -113,7 +113,7 @@ private:
 	glm::vec3 angleToRGB(double h, float sat, float val);
 
 	const int GV_NUM_ORBITALS = 4;
-	const float GV_ORBITAL_DISTANCE = 1.35;
+	const float GV_ORBITAL_DISTANCE = 1.35f;
 	const float GV_INV_WIGGLE_DISTANCE = 10.0f;
 
 	// Author: Stefan Gustavson (stegu@itn.liu.se) 2004

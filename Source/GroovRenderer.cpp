@@ -307,10 +307,10 @@ void GroovRenderer::drawXOrbitals(glm::mat4 model)
 	Matrix3D<float> modelMatrix;
 	float normalMatrix[9];
 
-	for (int i = 0; i < GV_NUM_ORBITALS; i++) {
+	for (int orbNum = 0; orbNum < GV_NUM_ORBITALS; orbNum++) {
 		glm::mat4 baseModel = model;
 		float wiggleDistance = (audioStopped) ? 1000.0f : GV_INV_WIGGLE_DISTANCE;
-		transMat = glm::translate(glm::mat4(1.0), glm::vec3(GV_ORBITAL_DISTANCE * cos(curveLooper + (i*glm::pi<float>() / 2.0)), cos(looper*wiggleSpeed) / wiggleDistance, GV_ORBITAL_DISTANCE * sin(curveLooper + (i*glm::pi<float>() / 2.0))));
+		transMat = glm::translate(glm::mat4(1.0), glm::vec3(GV_ORBITAL_DISTANCE * cos(curveLooper + (orbNum*glm::pi<float>() / 2.0)), cos(looper*wiggleSpeed) / wiggleDistance, GV_ORBITAL_DISTANCE * sin(curveLooper + (orbNum*glm::pi<float>() / 2.0))));
 		baseModel = transMat * baseModel;
 
 		modelMatrix = g2jMat4(baseModel);
@@ -331,7 +331,7 @@ void GroovRenderer::drawXOrbitals(glm::mat4 model)
 		if (uniforms->normalMatrix.get() != nullptr)
 			uniforms->normalMatrix->setMatrix3(normalMatrix, 1, false);
 
-		xOrbitals[i]->draw(openGLContext, *attributes);
+		xOrbitals[orbNum]->draw(openGLContext, *attributes);
 	}
 }
 
@@ -342,10 +342,10 @@ void GroovRenderer::drawYOrbitals(glm::mat4 model)
 	Matrix3D<float> modelMatrix;
 	float normalMatrix[9];
 
-	for (int i = 0; i < GV_NUM_ORBITALS; i++) {
+	for (int orbNum = 0; orbNum < GV_NUM_ORBITALS; orbNum++) {
 		glm::mat4 baseModel = model;
 		float wiggleDistance = (audioStopped) ? 1000.0f : GV_INV_WIGGLE_DISTANCE;
-		transMat = glm::translate(glm::mat4(1.0), glm::vec3(cos(looper*wiggleSpeed) / wiggleDistance, GV_ORBITAL_DISTANCE * cos(curveLooper + (i*glm::pi<float>() / 2.0) + (glm::pi<float>() / 4.0)), GV_ORBITAL_DISTANCE * sin(curveLooper + (i*glm::pi<float>() / 2.0) + (glm::pi<float>() / 4.0))));
+		transMat = glm::translate(glm::mat4(1.0), glm::vec3(cos(looper*wiggleSpeed) / wiggleDistance, GV_ORBITAL_DISTANCE * cos(curveLooper + (orbNum*glm::pi<float>() / 2.0) + (glm::pi<float>() / 4.0)), GV_ORBITAL_DISTANCE * sin(curveLooper + (orbNum*glm::pi<float>() / 2.0) + (glm::pi<float>() / 4.0))));
 		baseModel = transMat * baseModel;
 
 		modelMatrix = g2jMat4(baseModel);
@@ -366,7 +366,7 @@ void GroovRenderer::drawYOrbitals(glm::mat4 model)
 		if (uniforms->normalMatrix.get() != nullptr)
 			uniforms->normalMatrix->setMatrix3(normalMatrix, 1, false);
 
-		xOrbitals[i]->draw(openGLContext, *attributes);
+		yOrbitals[orbNum]->draw(openGLContext, *attributes);
 	}
 }
 
@@ -550,34 +550,34 @@ glm::vec3 GroovRenderer::angleToRGB(double h, float sat, float val) {
 	switch (i) {
 	case 0:
 		color.r = val;
-		color.g = t;
-		color.b = p;
+		color.g = (float)t;
+		color.b = (float)p;
 		break;
 	case 1:
-		color.r = q;
+		color.r = (float)q;
 		color.g = val;
-		color.b = p;
+		color.b = (float)p;
 		break;
 	case 2:
-		color.r = p;
+		color.r = (float)p;
 		color.g = val;
-		color.b = t;
+		color.b = (float)t;
 		break;
 	case 3:
-		color.r = p;
-		color.g = q;
+		color.r = (float)p;
+		color.g = (float)q;
 		color.b = val;
 		break;
 	case 4:
-		color.r = t;
-		color.g = p;
+		color.r = (float)t;
+		color.g = (float)p;
 		color.b = val;
 		break;
 	case 5:
 	default:
 		color.r = val;
-		color.g = p;
-		color.b = q;
+		color.g = (float)p;
+		color.b = (float)q;
 		break;
 	}
 	return color;

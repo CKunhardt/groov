@@ -3,7 +3,11 @@
 
 	GLMHelpers.h
 	Created: 3 Nov 2018 3:08:05pm
-	Author:  ClintonK
+	Author:  Clinton Kunhardt
+
+	Some helper methods I created to convert between GLM and JUCE types.
+	The vector ones aren't really used, but the compiler will just optimize
+	them away :)
 
   ==============================================================================
 */
