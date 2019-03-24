@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QB3yGT" name="Groov" projectType="audioplug" jucerVersion="5.4.1"
+<JUCERPROJECT id="QB3yGT" name="Groov" projectType="audioplug" jucerVersion="5.4.3"
               pluginCharacteristicsValue="pluginWantsMidiIn" pluginVST3Category="Tools"
               headerPath="C:\Users\24als\OneDrive\Documents\repos\Comp465\C++\glm\glm&#10;C:\Users\anselcolby\Documents\COMP465\glm\glm&#10;C:\SDKs\VST3_SDK"
               pluginFormats="buildAU,buildStandalone,buildVST3" bundleIdentifier="com.clansel.Groov"

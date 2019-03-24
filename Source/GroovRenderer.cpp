@@ -252,7 +252,7 @@ void GroovRenderer::renderOpenGL()
 	// Set up an identity model matrix
 	glm::mat4 oModelMatrix = glm::mat4(1.0);
 
-	double toAdd = (glm::pi<double>() * (bpm / 60.0) * rdt);
+	double toAdd = (glm::pi<double>() * ( (bpm*bpmMult) / 60.0) * rdt);
 	double bgToAdd = (glm::pi<double>() * (bgSpeed / 60.0) * rdt);
 
 	if (!frozen) {

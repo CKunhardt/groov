@@ -89,6 +89,13 @@ GroovPlayer::GroovPlayer(GroovAudioProcessor& p)
 	addAndMakeVisible(bgSpeedLabel);
 	bgSpeedLabel.attachToComponent(&bgSpeedSlider, true);
 
+	addAndMakeVisible(bpmSlider);
+	bpmSlider.setRange(0, 2, 0.1);
+	bpmSlider.addListener(this);
+
+	addAndMakeVisible(bpmSliderLabel);
+	bpmSliderLabel.attachToComponent(&bpmSlider, true);
+
 	// TOGGLE BUTTONS -----------------------
 
 	// this button toggles the feature that bounces the cubes
@@ -98,6 +105,9 @@ GroovPlayer::GroovPlayer(GroovAudioProcessor& p)
 	// This button toggles the feature that 'freezes' the animation by setting a bool in GroovRenderer to true
 	addAndMakeVisible(freeze);
 	freeze.onClick = [this] { renderer->frozen = freeze.getToggleState(); };
+
+	// Manual BPM controls
+	bpmSlider.setValue(renderer->bpmMult);
 
 	// Cube controls
 	spinSpeedSlider.setValue(0.01);
@@ -125,6 +135,7 @@ GroovPlayer::~GroovPlayer()
 
 void GroovPlayer::sliderValueChanged(Slider*)
 {
+	renderer->bpmMult = (double)bpmSlider.getValue();
 	renderer->scale = (float)sizeSlider.getValue();
 	renderer->rotationSpeed = (float)spinSpeedSlider.getValue();
 	renderer->wiggleSpeed = (float)wiggleSlider.getValue();
@@ -168,6 +179,7 @@ void GroovPlayer::resized()
 	wiggleSlider.setBounds(controls.removeFromBottom(PARAM_HEIGHT));
 	spinSpeedSlider.setBounds(controls.removeFromBottom(PARAM_HEIGHT));
 	sizeSlider.setBounds(controls.removeFromBottom(PARAM_HEIGHT));
+	bpmSlider.setBounds(controls.removeFromBottom(PARAM_HEIGHT));
 
 	top.removeFromRight(70);
 

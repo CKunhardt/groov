@@ -24,7 +24,7 @@ GroovRenderWindow::GroovRenderWindow(String name, GroovRenderer* r) : TopLevelWi
 	}
 	setOpaque(true);
 	setVisible(true);
-	addToDesktop(0);
+	addToDesktop();
 }
 
 GroovRenderWindow::~GroovRenderWindow()

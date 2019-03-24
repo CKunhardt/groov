@@ -33,7 +33,7 @@ public:
     void resized() override;
 
 	const int PLAYER_WIDTH = 400;
-	const int PLAYER_HEIGHT = 300;
+	const int PLAYER_HEIGHT = 325;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -54,7 +54,8 @@ private:
 		bgSatLabel{ {}, "BG Saturation" },
 		bgValLabel{ {}, "BG Brightness" },
 		bgSpeedLabel{ {}, "BG Speed" },
-		zoomLabel{ {}, "Zoom: " };
+		zoomLabel{ {}, "Zoom: " },
+		bpmSliderLabel{ {}, "BPM Scale: " };
 
 	Label bpmLabel;
 
@@ -66,7 +67,8 @@ private:
 		bgHueSlider,
 		bgSpeedSlider,
 		bgSatSlider,
-		bgValSlider;
+		bgValSlider,
+		bpmSlider;
 
 	ToggleButton enableScaleBounce{ "Enable Bouncing" },
 		freeze{ "FREEZE!" };

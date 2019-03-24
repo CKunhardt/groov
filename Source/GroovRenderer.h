@@ -51,6 +51,7 @@ public:
 
 	bool frozen = false;
 
+	float bpmMult = 1.0;
 	// If we change this, we have to change the initial value of initialBPM in private.
 	double bpm = 60.0;
 
